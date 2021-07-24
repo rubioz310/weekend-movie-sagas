@@ -69,7 +69,8 @@ router.get('/details/:id', (req, res) => {
                 ORDER BY m.title;`;
   pool.query(query,[id])
     .then( result => {
-      res.send(result.rows);
+      console.log(result.rows[0]);
+      res.send(result.rows[0]);
     })
     .catch(err => {
       console.log('ERROR: Get movie details', err);
