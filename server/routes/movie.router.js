@@ -69,7 +69,6 @@ router.get('/details/:id', (req, res) => {
                 ORDER BY m.title;`;
   pool.query(query,[id])
     .then( result => {
-      console.log(result.rows[0]);
       res.send(result.rows[0]);
     })
     .catch(err => {
