@@ -53,4 +53,29 @@ router.post('/', (req, res) => {
   })
 })
 
+//Get the movie details of the movie with the id given
+router.get('/details/:id', (req, res) => {
+  const id = req.params.id;
+  const query = `select
+                  title,
+                  description,
+                  poster,
+                  ARRAY_AGG (name) genres
+                FROM movies as m
+                INNER JOIN movies_genres AS mg ON mg.movie_id=m.id
+                INNER JOIN genres as g on g.id = mg.genre_id
+                WHERE m.id=$1
+                GROUP BY m.title, m.description, m.poster
+                ORDER BY m.title;`;
+  pool.query(query,[id])
+    .then( result => {
+      res.send(result.rows);
+    })
+    .catch(err => {
+      console.log('ERROR: Get movie details', err);
+      res.sendStatus(500)
+    })
+
+});
+
 module.exports = router;
