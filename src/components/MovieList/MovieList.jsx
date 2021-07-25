@@ -16,15 +16,18 @@ function MovieList() {
     return (
         <main>
             <h1>MovieList</h1>
-            <Grid container spacing={6} justifyContent="center" >
-                {movies.map(movie => {
-                    return (
-                        <Grid item  xs={7} sm={4} md={3} lg={2}>
-                            <MovieItem movie={movie} key={movie.id}/>
-                        </Grid>
-                    );
-                })}
-            </Grid>
+
+            <div style={{padding: 30 }}>
+                <Grid container spacing={4} justifyContent="center" >
+                    {movies.map(movie => {
+                        return (
+                            <Grid item  xs={8} sm={4} md={3} lg={2}>
+                                <MovieItem movie={movie} key={movie.id}/>
+                            </Grid>
+                        );
+                    })}
+                </Grid>
+            </div>
         </main>
 
     );
