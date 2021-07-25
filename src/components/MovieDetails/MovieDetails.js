@@ -1,9 +1,10 @@
-import { Card, CardContent, CardHeader, Chip, Divider, Grid, makeStyles, Paper, TextareaAutosize, Typography } from "@material-ui/core";
+import { Card, CardContent, CardHeader, Chip, Divider, Grid, makeStyles, Paper, Typography } from "@material-ui/core";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Popper } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
+import { Create, Delete } from "@material-ui/icons";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -22,19 +23,31 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function MovieDetails() {
-    const { id } = useParams();
     const dispatch = useDispatch();
     const classes = useStyles();
-    const movieDetails = useSelector(store => store.movieDetails);
+    const history = useHistory();
+
+    //Selected movie id
+    const { id } = useParams();
+    
+    //Gets all movie details
     useEffect(()=> {
         dispatch({
             type: 'FETCH_DETAILS',
             payload: id
         })
       },[]);
+    const movieDetails = useSelector(store => store.movieDetails);
+    
+    //Send you to the edit view for the current movie
+    const handleEdit = () => {
+        history.push(`/edit/${id}`)
+    }
 
     return (
         <Paper elevation={4} className={classes.root}>
+            <IconButton onClick={handleEdit}><Create /></IconButton>
+            <IconButton ><Delete /></IconButton>
             <Card className={classes.card}>
                 <CardHeader title={movieDetails.title} className={classes.cardHeader}/>
                 <CardContent>
@@ -53,7 +66,6 @@ function MovieDetails() {
                     </Grid>
                 </CardContent>
             </Card>
-            
         </Paper>
     )
 }
