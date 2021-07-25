@@ -6,7 +6,8 @@ import './AddMovie.css';
 import { Card, CardActions, CardContent, CardHeader, Chip,
      Divider, Grid, makeStyles, Paper, TextField } from "@material-ui/core";
 //Material ui icons for buttons
-
+import { Button } from "@material-ui/core";
+import { SaveAlt, Close } from "@material-ui/icons";
 
 
      //styles used for the card
@@ -26,6 +27,9 @@ const useStyles = makeStyles(theme => ({
     },
     chip:{
         margin: theme.spacing(1)
+    },
+    action:{
+        display: 'inline'
     }
 }))
 
@@ -123,9 +127,9 @@ function AddMovie() {
                             ))}
                         </Grid>
                     </Grid>
-                    <CardActions>
-                        <button onClick={handleSave}>SAVE</button>
-                        <button onClick={handleCancel}>CANCEL</button>
+                    <CardActions className={classes.action}>
+                        <Button onClick={handleSave} variant='contained' size='large' color='primary'><SaveAlt />SAVE</Button>
+                        <Button onClick={handleCancel} variant='contained' size='large' color='secondary'><Close />CANCEL</Button>
                     </CardActions>
                 </CardContent>
             </Card>
