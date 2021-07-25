@@ -52,7 +52,6 @@ function EditMovie() {
 
     //Movie object to send to server
     const newMovie = useSelector(store => store.movieDetails);
-    console.log('New movie object',newMovie);
 
     //New genres on different state for simplicity
     const newGenres = useSelector(store => store.movieDetails.genres);
@@ -93,9 +92,12 @@ function EditMovie() {
         if(!newMovie.title || !newMovie.description || !newMovie.poster || newGenres.length === 0){
             return alert('Fill all empty field');
         }
+        
+        console.log();
         dispatch({
             type: 'PUT_MOVIE',
-            payload: {... newMovie, genre_id: newGenres.map(genre => genre.id)} //gets the id of all genres to be added
+            //gets the id of all genres to be added
+            payload: {... newMovie, genre_id: newGenres.map(genre => genres.find(g => g.name === genre).id)} 
         });
         //A confirmation message should show here *** Personal stretch ***
         //^^^^^^

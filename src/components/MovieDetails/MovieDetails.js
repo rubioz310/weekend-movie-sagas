@@ -37,6 +37,7 @@ function MovieDetails() {
             payload: id
         })
       },[]);
+      
     const movieDetails = useSelector(store => store.movieDetails);
     
     //Send you to the edit view for the current movie
