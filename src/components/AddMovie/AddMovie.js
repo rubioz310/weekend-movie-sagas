@@ -14,7 +14,10 @@ import { SaveAlt, Close } from "@material-ui/icons";
 const useStyles = makeStyles(theme => ({
     root: {
         margin: '32px',
-        padding: '24px'
+        padding: '24px',
+        '& > *': {
+            margin: theme.spacing(1),
+          },
     },
     cardHeader: {
         background: 'cyan'
@@ -28,9 +31,6 @@ const useStyles = makeStyles(theme => ({
     chip:{
         margin: theme.spacing(1)
     },
-    action:{
-        display: 'inline'
-    }
 }))
 
 function AddMovie() {
@@ -72,10 +72,9 @@ function AddMovie() {
         history.push('/');
     }
 
-
     return (
         <Paper elevation={4} className={classes.root}>
-            <p>Add movie</p>
+            <h2>Add movie</h2>
             <Card className={classes.card}>
                 {/* Card header has the input field for the title */}
                 <CardHeader 
@@ -108,7 +107,7 @@ function AddMovie() {
                             <Divider />
                             {/* Show genres to be added */}
                             <p>ADDED GENRES</p>
-                            {newGenres.map(genre => (
+                            {newGenres.sort(compare).map(genre => (
                                 <Chip value={genre.id} key={genre.id} label={genre.name} className={classes.chip}
                                 color='primary'
                                 onClick={event => setNewGenres(newGenres.filter(item => item != genre))}/>
@@ -127,15 +126,23 @@ function AddMovie() {
                             ))}
                         </Grid>
                     </Grid>
-                    <CardActions className={classes.action}>
-                        <Button onClick={handleSave} variant='contained' size='large' color='primary'><SaveAlt />SAVE</Button>
-                        <Button onClick={handleCancel} variant='contained' size='large' color='secondary'><Close />CANCEL</Button>
-                    </CardActions>
                 </CardContent>
             </Card>
+            <br/>
+            <Button onClick={handleSave} variant='contained' size='large' color='primary'><SaveAlt />SAVE</Button>
+            <Button onClick={handleCancel} variant='contained' size='large' color='secondary'><Close />CANCEL</Button>
         </Paper>
         
     )
 }
-
+//Function used to sort genres to be added
+function compare( a, b ) {
+    if ( a.name < b.name ){
+      return -1;
+    }
+    if ( a.name > b.name ){
+      return 1;
+    }
+    return 0;
+  }
 export default AddMovie;
