@@ -91,6 +91,16 @@ const movieDetails = (state = {
     switch (action.type) {
         case 'SET_DETAILS':
             return action.payload;
+        case 'SET_TITLE':
+            return {...state, title: action.payload }
+        case 'SET_DESCRIPTION':
+            return {...state, description: action.payload }
+        case 'SET_POSTER':
+            return {...state, poster: action.payload }
+        case 'SET_NEW_GENRES':
+            return {...state, genres: action.payload }
+        case 'REMOVE_GENRE':
+            return {...state, genres: state.genres.filter(genre => genre != action.payload)}
         default:
             return state;
     }
