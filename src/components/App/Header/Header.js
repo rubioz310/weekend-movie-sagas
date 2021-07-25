@@ -9,7 +9,7 @@ function Header() {
         history.push('/')
     }
     return(
-        <div>
+        <div className='App-header'>
             <h1>The Movies Saga!</h1>
             <button onClick={addMovieView}>ADD MOVIE</button>
             <button onClick={homeView}>HOME</button>
