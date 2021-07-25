@@ -78,32 +78,34 @@ router.get('/details/:id', (req, res) => {
     })
 });
 
+
+//her I found simpler to delete all existing genres of a movie and then add the new ones even if if one was already there
 router.put('/:id', (req, res) => {
   const updatedMovieId = req.body.id;
   console.log(req.body);
-  // RETURNING "id" will give us back the id of the created movie
+
   const insertMovieQuery = `
   UPDATE "movies" 
   SET "title" = $1, "poster" = $2, "description" = $3
   WHERE id=$4;`
 
-  // FIRST QUERY MAKES MOVIE
   pool.query(insertMovieQuery, [req.body.title, req.body.poster, req.body.description, updatedMovieId])
   .then(result => {
-
+    //This deletes all existing genres of a  movie
     const deleteOldGenres = `
       DELETE FROM "movies_genres"
       WHERE "movie_id" = $1;`
 
     pool.query(deleteOldGenres, [updatedMovieId])
     .then(result => {
-      // Now handle the genre reference
+      // This add the new genres of a movie. Right now it only adds the first one in the array.
+      // Did not have time to modify the query
       const insertMovieGenreQuery = `
       INSERT INTO "movies_genres" ("movie_id", "genre_id")
       VALUES  ($1, $2);`
-      // SECOND QUERY ADDS GENRE FOR THAT NEW MOVIE
+      // THIRD QUERY ADDS GENRE FOR THAT NEW MOVIE
       pool.query(insertMovieGenreQuery, [updatedMovieId, req.body.genre_id[0]]).then(result => {
-        //Now that both are done, send back success!
+        //Now that all are done, send back success!
         res.sendStatus(201);
       }).catch(err => {
         // catch for third query

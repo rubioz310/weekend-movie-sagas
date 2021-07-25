@@ -6,6 +6,7 @@ import { IconButton } from "@material-ui/core";
 import { Create, Delete } from "@material-ui/icons";
 import { useHistory } from "react-router";
 
+//Styles
 const useStyles = makeStyles(theme => ({
     root: {
         margin: '32px',
@@ -37,18 +38,21 @@ function MovieDetails() {
             payload: id
         })
       },[]);
-      
     const movieDetails = useSelector(store => store.movieDetails);
     
     //Send you to the edit view for the current movie
     const handleEdit = () => {
         history.push(`/edit/${id}`)
     }
+    //This should delete the movie ****Personal stretch ******
+    const handleDelete = () => {
+        alert('Work in progress sorry')
+    }
 
     return (
         <Paper elevation={4} className={classes.root}>
             <IconButton onClick={handleEdit}><Create /></IconButton>
-            <IconButton ><Delete /></IconButton>
+            <IconButton onClick={handleDelete}><Delete /></IconButton>
             <Card className={classes.card}>
                 <CardHeader title={movieDetails.title} className={classes.cardHeader}/>
                 <CardContent>
@@ -72,14 +76,3 @@ function MovieDetails() {
 }
 
 export default MovieDetails;
-
-// // //Takes care of opening the popper
-// // const [anchorEl, setAnchorEl] = useState(null);
-// // const handleClick = (event) => {
-// //   setAnchorEl(anchorEl ? null : event.currentTarget);
-// // };
-// // const open = Boolean(anchorEl);
-
-// {/* <Popper open={open} anchorEl={anchorEl} placement='right-end'>
-//                 <TextareaAutosize value={movieDetails.poster} rows='4' />
-//             </Popper> */}

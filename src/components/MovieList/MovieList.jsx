@@ -16,7 +16,6 @@ function MovieList() {
     return (
         <main>
             <h1>MovieList</h1>
-
             <div style={{padding: 30 }}>
                 <Grid container spacing={4} justifyContent="center" >
                     {movies.map(movie => {

@@ -56,6 +56,7 @@ function EditMovie() {
     //New genres on different state for simplicity
     const newGenres = useSelector(store => store.movieDetails.genres);
 
+    //All of this is for changing the movie details on redux only
     const handleTitleChange = (event) => {
         dispatch({
             type: 'SET_TITLE',
@@ -92,8 +93,6 @@ function EditMovie() {
         if(!newMovie.title || !newMovie.description || !newMovie.poster || newGenres.length === 0){
             return alert('Fill all empty field');
         }
-        
-        console.log();
         dispatch({
             type: 'PUT_MOVIE',
             //gets the id of all genres to be added
@@ -101,17 +100,18 @@ function EditMovie() {
         });
         //A confirmation message should show here *** Personal stretch ***
         //^^^^^^
-        history.push('/');
+        history.push(`/details/${id}`);
     }
     //Go back to home if you cancel
     const handleCancel = () => {
-        history.push('/');
+        history.push(`/details/${id}`);
     }
 
     return (
         <Paper elevation={4} className={classes.root}>
             <h2>Edit movie</h2>
             <Card className={classes.card}>
+
                 {/* Card header has the input field for the title */}
                 <CardHeader 
                     title={<TextField 
@@ -122,8 +122,10 @@ function EditMovie() {
                         />}
                     className={classes.cardHeader}>
                 </CardHeader>
+
                 <CardContent>
                     <Grid container item xs={12} spacing={2}>
+
                         <Grid item xs={12} sm={4} md={3}>
                             <TextField 
                                 inputProps = {{style:{textAlign: 'center'}}}
@@ -134,6 +136,7 @@ function EditMovie() {
                                 <br/>
                             {newMovie.poster ? <img src={newMovie.poster}/>:null}
                         </Grid>
+                        
                         <Grid item xs={12} sm={8} md={9}>
                             <TextField 
                                 inputProps = {{style:{textAlign: 'center'}}}
@@ -157,6 +160,7 @@ function EditMovie() {
                                 variant='outlined'
                                 color='secondary'
                                 onClick={event => {
+                                    // This prevents adding a genre already added
                                     if(!newGenres.includes(genre.name)){
                                         handleGenresChange(genre.name)
                                     }
@@ -173,6 +177,4 @@ function EditMovie() {
         
     )
 }
-//Function used to sort genres to be added
-
 export default EditMovie;

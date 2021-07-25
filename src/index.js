@@ -20,6 +20,7 @@ function* rootSaga() {
     yield takeEvery('PUT_MOVIE', putMovie)
 }
 
+// ************************** ALL SAGAS ***********************************
 function* fetchAllMovies() {
     // get all movies from the DB
     try {
@@ -53,8 +54,8 @@ function* fetchGenres() {
         console.log('get genres error');
     }
 }
-
 function* postMovie(action) {
+    // Uploads a new movie
     try {
         yield axios.post('api/movie', action.payload);
     } catch {
@@ -62,17 +63,20 @@ function* postMovie(action) {
     }
 }
 function* putMovie(action) {
-    console.log(action);
+    // Edits a movie
     try {
         yield axios.put(`api/movie/${action.payload.id}`, action.payload);
+        yield put({type: 'FETCH_DETAILS', payload: action.payload.id})
     } catch {
         console.log(('Edit movie error'));
     }
 }
+// ************************** END OF SAGAS ***********************************
 
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
 
+// ************************** ALL REDUCERS ***********************************
 // Used to store movies returned from the server
 const movies = (state = [], action) => {
     switch (action.type) {
@@ -82,7 +86,6 @@ const movies = (state = [], action) => {
             return state;
     }
 }
-
 // Used to store the movie genres
 const genres = (state = [], action) => {
     switch (action.type) {
@@ -92,7 +95,6 @@ const genres = (state = [], action) => {
             return state;
     }
 }
-
 // Used to store details of a movie returned from the server
 const movieDetails = (state = {
     genres: []
@@ -114,6 +116,7 @@ const movieDetails = (state = {
             return state;
     }
 }
+// ************************** END OF ALL REDUCERS ***********************************
 
 // Create one store that all components can use
 const storeInstance = createStore(
