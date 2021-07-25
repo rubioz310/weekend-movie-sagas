@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MovieItem from '../MovieItem/MovieItem';
 import './MovieList.css'
+import { Grid } from '@material-ui/core';
 
 function MovieList() {
 
@@ -15,13 +16,18 @@ function MovieList() {
     return (
         <main>
             <h1>MovieList</h1>
-            <section className="movies">
-                {movies.map(movie => {
-                    return (
-                        <MovieItem movie={movie} />
-                    );
-                })}
-            </section>
+
+            <div style={{padding: 30 }}>
+                <Grid container spacing={4} justifyContent="center" >
+                    {movies.map(movie => {
+                        return (
+                            <Grid item  xs={8} sm={4} md={3} lg={2}>
+                                <MovieItem movie={movie} key={movie.id}/>
+                            </Grid>
+                        );
+                    })}
+                </Grid>
+            </div>
         </main>
 
     );
